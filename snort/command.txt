@@ -1,0 +1,11 @@
+#进入调试
+docker run -it --rm --net=host -v /opt/snortrules-snapshot-back:/home/snort fang/snort /bin/bash
+#启动snort
+docker run -it -d --net=host --privileged=true -v /opt/snortrules-snapshot-back:/home/snort --name snort fang/snort -i enp2s0
+
+#打印输出到控制台
+-A console
+
+#启动snort同时启动rsyslog
+docker run -it --rm --net=host --privileged=true -v /opt/snortrules-snapshot-back:/home/snort --name snort fang/snort6.7 \
+sh -c "service rsyslog restart && /usr/local/bin/snort -c /home/snort/etc/snort.conf -i eht0"
