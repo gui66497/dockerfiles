@@ -5,6 +5,7 @@ ENV DAQ_VERSION 2.0.6
 ENV SNORT_VERSION 2.9.8.3
 ENV DNET_VERSION 1.12
 
+RUN yum -y install yum-plugin-ovl
 RUN yum -y install epel-release
 RUN yum -y install rsyslog
 RUN yum -y install gcc gcc-c++ flex libpcap* pcre* bison libpcre-devel zlib-devel wget tar
