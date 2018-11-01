@@ -1,0 +1,83 @@
+es1:
+  image: zzjz/es:6.2.2
+  container_name: es
+  restart: always
+  ports:
+      - 9200:9200
+      - 9300:9300
+  environment:
+    - cluster.name=soc_test
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms4G -Xmx4G"
+  ulimits:
+     memlock:
+      soft: -1
+      hard: -1
+  nofile:
+       soft: 65536
+       hard: 65536
+  volumes:
+      - ./x-pack-6.2.2.zip:/x-pack-6.2.2.zip
+      - ./config/es1.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./datas/es/:/usr/share/elasticsearch/data
+
+kibana:
+  image: zzjz/kibana:6.2.2
+  container_name: kibana
+  restart: always
+  ports:
+    - 5601:5601
+  environment:
+    - "ELASTICSEARCH_URL=http://es1:9200"
+  volumes:
+    - ./x-pack-6.2.2.zip:/x-pack-6.2.2.zip
+    - ./kibana/optimize/:/usr/share/kibana/optimize/
+    - ./kibana/src/:/usr/share/kibana/src/
+    - ./kibana/ui_framework/:/usr/share/kibana/ui_framework/
+  links:
+    - es1
+
+logstash:
+  image: zzjz/logstash:6.2.2
+  container_name: logstash
+  restart: always
+  ports:
+    - 10010:10010
+    - 10010:10010/udp
+    - 10011:10011
+    - 10012:10012
+    - 10014:10014
+    - 10015:10015
+    - 5055:5055
+    - 7777:7777
+    - 3456:3456
+    - 5140:5140
+    - 5047:5047
+    - 7435:7435
+    - 5144:5144/udp
+    - 5679:5679/udp
+
+  volumes:
+    - ./x-pack-6.2.2.zip:/x-pack-6.2.2.zip
+    - ./mysql-connector-java-5.1.42.jar:/mysql-connector-java-5.1.42.jar
+    - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml
+    - ./logstash/scripts:/scripts/
+    - ./logstash/plugin:/plugin/
+    - ./logstash/lastrun:/usr/share/logstash/lastrun/
+  links:
+    - es1
+
+metricbeat:
+  image: metricbeat:6.2.2
+  container_name: metricbeat
+  restart: always
+  hostname: master
+  environment:
+    - "system.hostfs=/hostfs"
+  volumes:
+    - /proc:/hostfs/proc:ro
+    - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    - /:/hostfs:ro
+    - ./config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+    - ./config/system.yml:/usr/share/metricbeat/modules.d/system.yml
+  net: host

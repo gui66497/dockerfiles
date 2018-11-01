@@ -1,0 +1,48 @@
+es1:
+  image: zzjz/es:6.2.2
+  container_name: es
+  restart: always
+  ports:
+      - 9200:9200
+      - 9300:9300
+  environment:
+    - cluster.name=soc
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms4G -Xmx4G"
+  ulimits:
+    memlock:
+       soft: -1
+       hard: -1
+    nofile:
+       soft: 65536
+       hard: 65536
+  volumes:
+      - ./x-pack-6.2.2.zip:/x-pack-6.2.2.zip
+      - ./config/es1.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./datas/es/:/usr/share/elasticsearch/data
+
+metricbeat:
+  image: metricbeat:6.2.2
+  container_name: metricbeat
+  restart: always
+  hostname: datanode1
+  environment:
+    - "system.hostfs=/hostfs"
+  volumes:
+    - /proc:/hostfs/proc:ro
+    - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    - /:/hostfs:ro
+    - ./config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+    - ./config/system.yml:/usr/share/metricbeat/modules.d/system.yml
+  net: host
+
+packetbeat:
+  image: packetbeat:6.2.2
+  container_name: packetbeat
+  restart: always
+  hostname: datanode1
+  cap_add:
+    - NET_ADMIN 
+  volumes:
+    - ./config/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml
+  net: host
