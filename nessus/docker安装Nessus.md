@@ -1,7 +1,7 @@
 * 执行以下命令导入nessus镜像
     ```
-    docker load < nessus6.11.1.tar  //导入到本地docker
-    docker tag 57 nessus:6.11.1  //设置tag
+    docker load < nessus7.0.3.tar  //导入到本地docker
+    docker tag XX nessus:7.0.3  //设置tag
     ```
 * 由于6.11.1版本扫描只能出一台机器的结果,因此推荐使用7.0.3版本的,通过python脚本一样是能出结果的
 * 镜像加载完成之后启动docker镜像
