@@ -34,6 +34,7 @@ kibana:
     - ./kibana/optimize/:/usr/share/kibana/optimize/
     - ./kibana/src/:/usr/share/kibana/src/
     - ./kibana/ui_framework/:/usr/share/kibana/ui_framework/
+    - ./kibana/fonts:/usr/share/fonts/chinese
   links:
     - es1
 
