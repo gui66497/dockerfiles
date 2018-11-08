@@ -1,0 +1,9 @@
+web:
+  image: nginx
+  container_name: nsaweb
+  volumes:
+    - ./nsaweb:/html/nsaweb
+    - ./nginx.conf:/etc/nginx/nginx.conf
+  ports:
+    - "6080:6080"
+  restart: always
