@@ -1,4 +1,5 @@
 #!/bin/bash
+#安装docker
 dockercount=`rpm -qa|grep docker|wc -l`
 if [ $dockercount == 0 ]; then
     cd /opt/docker_install
@@ -20,4 +21,14 @@ if [ "$dockerpid" != "" ]; then
         echo "docker is runing!"
 else
         service docker start
+fi
+
+#安装docker-compose
+if which docker-compose 2>/dev/null; then
+  echo "docker-compose exists!"
+else
+  echo "nope, no docker-compose installed."
+  cp ./docker-compose/docker-compose-Linux-x86_64_1.5.2 /usr/bin/docker-compose
+  chmod +x /usr/bin/docker-compose
+  docker-compose --version
 fi
