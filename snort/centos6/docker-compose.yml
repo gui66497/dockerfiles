@@ -1,7 +1,7 @@
 snort:
   image: fang/snort6
   container_name: snort
-  command: sh -c "service rsyslog restart && /usr/local/bin/snort -c /home/snort/etc/snort.conf -i eth0"
+  command: sh -c "service rsyslog restart && /usr/local/bin/snort -c /home/snort/etc/snort.conf -i eth1"
   volumes:
     - /opt/snortrules-snapshot-back:/home/snort
   cap_add:
