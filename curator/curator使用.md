@@ -64,5 +64,10 @@ actions:
 docker run --rm -v /opt/curator-docker:/curator-docker fang/curator --dry-run /curator-docker/deleteIndecies.yml
 ```
 
+对比一下非docker下的命令为:
+```
+curator --config /opt/elasticsearch-curator/curator.yml --dry-run /opt/elasticsearch-curator/deleteIndecies.yml
+```
+
 其它功能可以前往官网查看[官方文档](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/index.html)或[使用实例](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/ex_delete_indices.html)
 
