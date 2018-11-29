@@ -1,5 +1,5 @@
 snort:
-  image: fang/snort6
+  image: fang/snort_new
   container_name: snort
   command: sh -c "service rsyslog restart && /usr/local/bin/snort -c /home/snort/etc/snort.conf -i eth1"
   volumes:
