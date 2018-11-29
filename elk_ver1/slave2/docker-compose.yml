@@ -8,6 +8,7 @@ es1:
   environment:
     - cluster.name=soc
     - bootstrap.memory_lock=true
+    - bootstrap.system_call_filter=false
     - "ES_JAVA_OPTS=-Xms4G -Xmx4G"
   ulimits:
     memlock:
@@ -30,7 +31,7 @@ metricbeat:
     - "system.hostfs=/hostfs"
   volumes:
     - /proc:/hostfs/proc:ro
-    - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    - /cgroup:/hostfs/cgroup:ro
     - /:/hostfs:ro
     - ./config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
     - ./config/system.yml:/usr/share/metricbeat/modules.d/system.yml

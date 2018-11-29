@@ -8,14 +8,15 @@ es1:
   environment:
     - cluster.name=soc_test
     - bootstrap.memory_lock=true
+    - bootstrap.system_call_filter=false
     - "ES_JAVA_OPTS=-Xms4G -Xmx4G"
   ulimits:
      memlock:
       soft: -1
       hard: -1
-  nofile:
-       soft: 65536
-       hard: 65536
+     nofile:
+      soft: 65536
+      hard: 65536
   volumes:
       - ./x-pack-6.2.2.zip:/x-pack-6.2.2.zip
       - ./config/es1.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -77,7 +78,7 @@ metricbeat:
     - "system.hostfs=/hostfs"
   volumes:
     - /proc:/hostfs/proc:ro
-    - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    - /cgroup:/hostfs/cgroup:ro
     - /:/hostfs:ro
     - ./config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
     - ./config/system.yml:/usr/share/metricbeat/modules.d/system.yml
