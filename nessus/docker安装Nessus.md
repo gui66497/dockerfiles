@@ -6,7 +6,7 @@
 * 由于6.11.1版本扫描只能出一台机器的结果,因此推荐使用7.0.3版本的,通过python脚本一样是能出结果的
 * 镜像加载完成之后启动docker镜像
     ```
-    docker run -d -p 8834:8834 --name nessus sometheycallme/docker-nessus
+    docker run -d -p 8834:8834 --restart=always --name nessus sometheycallme/docker-nessus
     ```
 * 访问http://www.tenable.com/products/nessus-home 输入邮箱获取activation code(这里可以使用[临时邮箱](http://24mail.chacuo.net/))
 * 浏览器输入https://ip:8834 进入Nessus的web界面,激活方式选择offline,离线激活,会得到一串challenge code
