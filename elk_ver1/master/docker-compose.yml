@@ -6,7 +6,7 @@ es1:
       - 9200:9200
       - 9300:9300
   environment:
-    - cluster.name=soc_test
+    - cluster.name=soc
     - bootstrap.memory_lock=true
     - bootstrap.system_call_filter=false
     - "ES_JAVA_OPTS=-Xms4G -Xmx4G"
@@ -43,6 +43,8 @@ logstash:
   image: zzjz/logstash:6.2.2
   container_name: logstash
   restart: always
+  privileged: true
+  user: root
   ports:
     - 10010:10010
     - 10010:10010/udp
@@ -54,6 +56,7 @@ logstash:
     - 7777:7777
     - 3456:3456
     - 5140:5140
+    - 5140:5140/udp
     - 5047:5047
     - 7435:7435
     - 5144:5144/udp
