@@ -1,0 +1,19 @@
+version: '2'
+services:
+  canal-server:
+    image: canal/canal-server:v1.1.4
+    container_name: canal-server
+    restart: always
+    ports:
+      - 11110:11110
+      - 11111:11111
+      - 11112:11112
+    environment:
+      - canal.instance.mysql.slaveId=1234
+      - canal.instance.master.address=192.168.1.36:3306
+      - canal.instance.dbUsername=canal
+      - canal.instance.dbPassword=canal
+      - canal.instance.connectionCharset=UTF-8
+      - canal.instance.filter.regex=.*\..* \
+    volumes:
+      - ./canal-logs:/home/admin/canal-server/logs
