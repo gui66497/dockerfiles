@@ -1,10 +1,10 @@
 启动命令
 ```$xslt
-docker run --name mysql5.7 --restart always -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root \
--v /home/soc/mysql/data:/var/lib/mysql -d mysql:5.7 --lower_case_table_names=1
+docker run --name mysql5.6 --restart always -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root \
+-v /home/soc/mysql/data:/var/lib/mysql -d mysql:5.6 --lower_case_table_names=1
 ```
 参数说明
-- --name mysql5.7: 指定运行容器名称
+- --name mysql5.6: 指定运行容器名称
 - --restart always: 容器意外退出后自动重启
 - -p 3306:3306: 映射主机 3306 端口到容器 3306 端口
 - -e MYSQL_ROOT_PASSWORD=12345: 指定 mysql root 密码，该参数是为必须的
@@ -16,13 +16,15 @@ docker-compose版本
 version: '3'
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:5.6
     container_name: mysql
     restart: always
     ports:
       - 3306:3306
+    command:
+      --lower_case_table_names=1
     volumes:
-      - ./db_data:/var/lib/mysql
+      - /home/soc/mysql/data:/var/lib/mysql
     environment:
        MYSQL_ROOT_PASSWORD: root
 ```
