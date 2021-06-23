@@ -3,8 +3,10 @@ MAINTAINER fgt<gui66497@163.com>
 
 RUN apt-get update
 RUN apt-get -y -q install wget lsb-core
-RUN wget http://apt-stable.ntop.org/16.04/all/apt-ntop-stable.deb
-RUN dpkg -i apt-ntop-stable.deb
+#RUN wget http://apt-stable.ntop.org/16.04/all/apt-ntop-stable.deb
+RUN wget https://packages.ntop.org/apt-stable/16.04/all/apt-ntop-stable.deb
+#RUN dpkg -i apt-ntop-stable.deb
+RUN apt install -y ./apt-ntop-stable.deb
 
 RUN apt-get clean all
 RUN apt-get update
